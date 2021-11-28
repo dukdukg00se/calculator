@@ -43,6 +43,7 @@ main {
   flex-flow: column wrap;
   justify-content: center;
   align-items: flex-end;
+  min-height: 100px; /* prevent display collapse with no content */
 }
 #top-display {
   word-break: break-all; /* break word at point it overflows */
