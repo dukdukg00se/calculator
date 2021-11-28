@@ -35,6 +35,9 @@ main {
   width: 400px;
   height: 600px;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 #display-container {
@@ -60,6 +63,15 @@ main {
   display: flex;
   gap: 5px;
   flex-wrap: wrap;
+  flex-direction: row-reverse;
+}
+.top-btns {
+  width: 172px;
+  height: 83px;
+}
+button {
+ height: 75px;
+ width: 83px;
 }
 
 
