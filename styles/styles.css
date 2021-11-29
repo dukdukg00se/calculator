@@ -43,13 +43,16 @@ main {
   flex-flow: column wrap;
   justify-content: center;
   align-items: flex-end;
-  min-height: 100px; /* prevent display collapse with no content */
+  min-height: 116px; /* prevent display collapse with no content */
+  padding: 10px;
 }
 #top-display {
-  word-break: break-all; /* break word at point it overflows */
   font-size: 20px;
+  word-break: break-all; /* break word at point it overflows */
+  min-height: 30px;
 }
 #bottom-display {
+
   font-size: 40px;
   word-break: break-all; /* break word at point it overflows */
 
