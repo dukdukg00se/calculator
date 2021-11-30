@@ -50,12 +50,12 @@ main {
   font-size: 20px;
   word-break: break-all; /* break word at point it overflows */
   min-height: 30px;
+  line-height: 1;
 }
 #bottom-display {
-
   font-size: 40px;
   word-break: break-all; /* break word at point it overflows */
-
+  line-height: 1;
 }
 
 #buttons-container {
