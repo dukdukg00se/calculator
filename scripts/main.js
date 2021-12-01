@@ -1,5 +1,5 @@
-let firstNum = ''; //this becomes num2
-let secondNum = ''; //this becomes num1
+let firstNum = ''; // this becomes num2
+let secondNum = ''; // this becomes num1
 let operation = '';
 let decimal = false;
 
@@ -68,8 +68,8 @@ let topDisplay = document.querySelector('#top-display');
 
 let nmbrBtns = document.querySelectorAll('.number');
 nmbrBtns.forEach((nmbr) => {
-  nmbr.addEventListener('click', () => {
-    if (btmDisplay.textContent === '0') { 
+  nmbr.addEventListener('click', () => { 
+    if (btmDisplay.textContent === '0') {  
       if (nmbr.textContent !== '0' && nmbr.textContent !== '.') {  
         firstNum += nmbr.textContent; 
       } else if (nmbr.textContent === '.' && !decimal) { 
@@ -84,8 +84,13 @@ nmbrBtns.forEach((nmbr) => {
         firstNum += nmbr.textContent;
       } else {
         if (!decimal) {
-          firstNum += nmbr.textContent;
-          decimal = true;
+          if (btmDisplay.textContent === secondNum) {
+            firstNum = '0' + nmbr.textContent;
+            decimal = true;
+          } else {
+            firstNum += nmbr.textContent;
+            decimal = true;
+          }
         }
       }
     }
@@ -96,11 +101,10 @@ nmbrBtns.forEach((nmbr) => {
 let oprtrBtns = document.querySelectorAll('.operator');
 oprtrBtns.forEach((btn) => {
   btn.addEventListener('click', () => {
-    console.log(btn.textContent);
-    if (operation === '') {
-      if (firstNum === '' && secondNum === '') {
+    if (operation === '') { // no operator selected and
+      if (firstNum === '') { // no operands
         return topDisplay.textContent;
-      } else { // if operation = '' and firstNum and secondNum = ''
+      } else {  // 
         operation = btn.textContent;
         secondNum = firstNum;
         firstNum = '';
@@ -108,12 +112,12 @@ oprtrBtns.forEach((btn) => {
         topDisplay.textContent = `${secondNum} ${operation}`;
       }
     
-    } else {
+    } else { // operator selected
       if (firstNum === '') {
         operation = btn.textContent;
         topDisplay.textContent = `${secondNum} ${operation}`;
-      } else { // if operation selected and firstNum is true
-        secondNum = operate(operation, +secondNum, +firstNum);
+      } else { 
+        secondNum = operate(operation, +secondNum, +firstNum) + '';
         operation = btn.textContent;
         topDisplay.textContent = `${secondNum} ${operation}`;
         btmDisplay.textContent = `${secondNum}`;
