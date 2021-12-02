@@ -3,8 +3,6 @@ let secondNum = ''; // this becomes num1
 let operation = '';
 let decimal = false;
 
-
-
 function add(num1, num2) {
 	return num1 + num2;
 };
@@ -17,6 +15,7 @@ function multiply(num1, num2) {
 function divide(num1, num2) {
   return num1 / num2;
 }
+
 function operate(oper, first, second) {
   let answer = '';
   switch (oper) {
@@ -72,7 +71,7 @@ nmbrBtns.forEach((nmbr) => {
     if (btmDisplay.textContent === '0') {  
       if (nmbr.textContent !== '0' && nmbr.textContent !== '.') {  
         firstNum += nmbr.textContent; 
-      } else if (nmbr.textContent === '.' && !decimal) { 
+      } else if (nmbr.textContent === '.') { 
         firstNum = '0' + nmbr.textContent; 
         decimal = true; 
       } else { 
@@ -99,20 +98,58 @@ nmbrBtns.forEach((nmbr) => {
 });
 
 let oprtrBtns = document.querySelectorAll('.operator');
+
+// oprtrBtns.forEach((btn) => {
+//   btn.addEventListener('click', () => {
+//     if (operation === '') { 
+//       if (firstNum === '') { 
+//         return;
+//       } else {  
+//         operation = btn.textContent;
+//         secondNum = firstNum;
+//         firstNum = '';
+//         decimal = false;
+//         topDisplay.textContent = `${secondNum} ${operation}`;
+//         console.log(operation);
+//       }
+    
+//     } else { 
+//       if (firstNum === '') {
+//         operation = btn.textContent;
+//         topDisplay.textContent = `${secondNum} ${operation}`;
+//       } else { 
+//         secondNum = operate(operation, +secondNum, +firstNum) + '';
+//         operation = btn.textContent;
+//         topDisplay.textContent = `${secondNum} ${operation}`;
+//         btmDisplay.textContent = `${secondNum}`;
+//         firstNum = '';
+//         decimal = false;
+//       }
+//     }
+//     // console.log(`firstNum: ${firstNum}, secondNum: ${secondNum}, operation: ${operation}`);
+//   });
+// });
+
 oprtrBtns.forEach((btn) => {
   btn.addEventListener('click', () => {
-    if (operation === '') { // no operator selected and
-      if (firstNum === '') { // no operands
-        return topDisplay.textContent;
-      } else {  // 
-        operation = btn.textContent;
-        secondNum = firstNum;
-        firstNum = '';
-        decimal = false;
-        topDisplay.textContent = `${secondNum} ${operation}`;
+    if (operation === '') { 
+      if (firstNum === '') { 
+        return;
+      } else { 
+        if (btn.textContent === '=') {
+          console.log('test');
+          return;
+        } else {
+          operation = btn.textContent;
+          secondNum = firstNum;
+          firstNum = '';
+          decimal = false;
+          topDisplay.textContent = `${secondNum} ${operation}`;
+          console.log('test2');
+        }
       }
     
-    } else { // operator selected
+    } else { 
       if (firstNum === '') {
         operation = btn.textContent;
         topDisplay.textContent = `${secondNum} ${operation}`;
@@ -125,6 +162,5 @@ oprtrBtns.forEach((btn) => {
         decimal = false;
       }
     }
-
   });
 });
