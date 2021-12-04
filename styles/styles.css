@@ -52,7 +52,7 @@ main {
   min-height: 30px;
   line-height: 1;
 }
-#bottom-display {
+#main-display {
   font-size: 40px;
   word-break: break-all; /* break word at point it overflows */
   line-height: 1;
