@@ -83,37 +83,6 @@ nmbrBtns.forEach((btn) => {
   });
 });
 
-// nmbrBtns.forEach((btn) => {
-//   btn.addEventListener('click', () => { 
-//     if (!firstNum) {  
-//       if (+btn.textContent > 0) {  
-//         firstNum += btn.textContent; 
-//       } else if (btn.textContent === '.') { 
-//         firstNum = '0' + btn.textContent; 
-//         decimalInUse = true; 
-//       } else { // btn.textContent = '0'
-//         return /* mainDisplay.textContent; */
-//       }
-//     } else { // firstNum true
-//       if (btn.textContent !== '.') { // btn.textContent = 0-9
-//         firstNum += btn.textContent;
-//       } else { // btn.textContent = '.'
-//         if (!decimalInUse) { 
-//           firstNum += btn.textContent;
-//           decimalInUse = true;
-//         }
-//       }
-//     }
-//     mainDisplay.textContent = firstNum;
-//   });
-// });
-
-
-
-
-
-
-
 let oprtrBtns = document.querySelectorAll('.operator');
 oprtrBtns.forEach((btn) => {
   btn.addEventListener('click', () => {
@@ -122,6 +91,7 @@ oprtrBtns.forEach((btn) => {
         if (!secondNum) {
           return;
         } else if (secondNum) {
+          topDisplay.textContent = `${secondNum} ${operationSelected} ${firstNum} ${btn.textContent}`; // the top display will just show secondNum and the button content/new operator
           operationSelected = btn.textContent;
         }
       } else { // firstNum true
@@ -135,7 +105,6 @@ oprtrBtns.forEach((btn) => {
           topDisplay.textContent = `${secondNum} ${operationSelected}`;
         }
       }
-    
     } else { // if operationSelected true, secondNum HAS to be true
       if (!firstNum) { // if firstNum false/undefined
         if (btn.textContent === '=') {
@@ -144,7 +113,6 @@ oprtrBtns.forEach((btn) => {
           operationSelected = btn.textContent;
           topDisplay.textContent = `${secondNum} ${operationSelected}`;
         }
-        
       } else { // if firstNum true
         if (btn.textContent === '=') {
           topDisplay.textContent = `${secondNum} ${operationSelected} ${firstNum} ${btn.textContent}`;
@@ -168,6 +136,8 @@ oprtrBtns.forEach((btn) => {
   });
 });
 
+// Worked on this function to clean up code but at this point I just want to get the calculator working correctly
+// *************************
 // function showResult(oper, first, second) {
 //   result = doMath(oper, first, second);
 //   mainDisplay.textContent = result;
