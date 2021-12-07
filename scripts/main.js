@@ -17,7 +17,7 @@ function divide(num1, num2) {
   return (num2 === 0) ? 'LOL' : num1 / num2;
 }
 function doMath(oper, first, second) {
-  let answer = '';
+  let answer;
   switch (oper) {
     case '+':
       answer = add(first, second);
@@ -31,7 +31,9 @@ function doMath(oper, first, second) {
     case '÷':
       answer = divide(first, second);
   }
-  return answer;
+  // Note the plus sign drops any "extra" zeroes at the end.
+  // It changes the result (which is a string) into a number again (think "0 + foo"), which means that it uses only as many digits as necessary
+  return +answer.toFixed(4);
 }
 function reset() {
   firstNum = ''; 
