@@ -14,9 +14,9 @@ function multiply(num1, num2) {
  return num1 * num2;
 };
 function divide(num1, num2) {
-  return num2 === 0 ? 'LOL' : num1 / num2;
+  return (num2 === 0) ? 'LOL' : num1 / num2;
 }
-function operate(oper, first, second) {
+function doMath(oper, first, second) {
   let answer = '';
   switch (oper) {
     case '+':
@@ -33,35 +33,86 @@ function operate(oper, first, second) {
   }
   return answer;
 }
+function reset() {
+  firstNum = ''; 
+  secondNum = ''; 
+  operationSelected = '';
+  result ='';
+  decimalInUse = false;
+  mainDisplay.textContent = 0;
+  topDisplay.textContent = '';
+}
+function setOperand(char) {
+  if (char === '.') {
+    decimalInUse = true;
+    return 0 + char;
+  } else {
+    return char;
+  }
+}
 
 let mainDisplay = document.querySelector('#main-display');
 let topDisplay = document.querySelector('#top-display');
 
-let nmbrBtns = document.querySelectorAll('.number');
+let clearBtn = document.querySelector('.clear');
+clearBtn.addEventListener('click', reset);
+
+let nmbrBtns = document.querySelectorAll(".number");
 nmbrBtns.forEach((btn) => {
-  btn.addEventListener('click', () => { 
-    if (!firstNum) {  
-      if (+btn.textContent > 0) {  
-        firstNum += btn.textContent; 
-      } else if (btn.textContent === '.') { 
-        firstNum = '0' + btn.textContent; 
-        decimalInUse = true; 
-      } else { // btn.textContent = '0'
-        return /* mainDisplay.textContent; */
-      }
-    } else { // firstNum true
-      if (btn.textContent !== '.') { // btn.textContent = 0-9
-        firstNum += btn.textContent;
-      } else { // btn.textContent = '.'
-        if (!decimalInUse) { 
+  btn.addEventListener("click", () => {
+    if (!firstNum) {
+      firstNum += setOperand(btn.textContent);
+    } else {
+      if (firstNum === "0") {
+        firstNum = "";
+        firstNum += setOperand(btn.textContent);
+      } else {
+        if (btn.textContent === ".") {
+          if (decimalInUse === false) {
+            firstNum += btn.textContent;
+            decimalInUse = true;
+          } else {
+            return;
+          }
+        } else { 
           firstNum += btn.textContent;
-          decimalInUse = true;
         }
       }
     }
     mainDisplay.textContent = firstNum;
   });
 });
+
+// nmbrBtns.forEach((btn) => {
+//   btn.addEventListener('click', () => { 
+//     if (!firstNum) {  
+//       if (+btn.textContent > 0) {  
+//         firstNum += btn.textContent; 
+//       } else if (btn.textContent === '.') { 
+//         firstNum = '0' + btn.textContent; 
+//         decimalInUse = true; 
+//       } else { // btn.textContent = '0'
+//         return /* mainDisplay.textContent; */
+//       }
+//     } else { // firstNum true
+//       if (btn.textContent !== '.') { // btn.textContent = 0-9
+//         firstNum += btn.textContent;
+//       } else { // btn.textContent = '.'
+//         if (!decimalInUse) { 
+//           firstNum += btn.textContent;
+//           decimalInUse = true;
+//         }
+//       }
+//     }
+//     mainDisplay.textContent = firstNum;
+//   });
+// });
+
+
+
+
+
+
 
 let oprtrBtns = document.querySelectorAll('.operator');
 oprtrBtns.forEach((btn) => {
@@ -71,16 +122,13 @@ oprtrBtns.forEach((btn) => {
         return;
       } else { // firstNum true
         if (btn.textContent === '=') {
-          // console.log('test');
-          // topDisplay.textContent = firstNum;
           return;
-        } else { // btn === x|-|+|÷
-          operationSelected = btn.textContent;
+        } else { // btn === x|-|+|÷          
           secondNum = firstNum;
           firstNum = '';
+          operationSelected = btn.textContent;
           decimalInUse = false;
           topDisplay.textContent = `${secondNum} ${operationSelected}`;
-          // mainDisplay.textContent still === firstNum
         }
       }
     
@@ -95,14 +143,15 @@ oprtrBtns.forEach((btn) => {
         
       } else { // if firstNum true
         if (btn.textContent === '=') {
-
+          topDisplay.textContent = `${secondNum} ${operationSelected} ${firstNum} ${btn.textContent}`;
+          
           // operationSelected = btn.textContent;
-          // topDisplay.textContent = `${secondNum} ${operationSelected} ${firstNum} =`;
-          // secondNum = operate(operationSelected, +secondNum, +firstNum) + '';
+
+          // secondNum = doMath(operationSelected, +secondNum, +firstNum) + '';
           // mainDisplay.textContent = secondNum;
           
         } else {
-          secondNum = operate(operationSelected, +secondNum, +firstNum) + '';
+          secondNum = doMath(operationSelected, +secondNum, +firstNum) + '';
           operationSelected = btn.textContent;
           topDisplay.textContent = `${secondNum} ${operationSelected}`;
           mainDisplay.textContent = `${secondNum}`;
@@ -114,3 +163,14 @@ oprtrBtns.forEach((btn) => {
     }
   });
 });
+
+
+
+function showResult() {
+  result = operate();
+  mainDisplay.textContent = result;
+  decimalInUse = false;
+  operationSelected = '';
+  secondNum = result;
+  firstNum = '';
+}
