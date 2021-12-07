@@ -1,7 +1,7 @@
 let firstNum = ''; // this becomes num2
 let secondNum = ''; // this becomes num1
 let operationSelected = '';
-let result ='';
+let result = '';
 let decimalInUse = false;
 
 function add(num1, num2) {
@@ -119,7 +119,11 @@ oprtrBtns.forEach((btn) => {
   btn.addEventListener('click', () => {
     if (!operationSelected) { 
       if (!firstNum) { 
-        return;
+        if (!secondNum) {
+          return;
+        } else if (secondNum) {
+          operationSelected = btn.textContent;
+        }
       } else { // firstNum true
         if (btn.textContent === '=') {
           return;
@@ -144,33 +148,31 @@ oprtrBtns.forEach((btn) => {
       } else { // if firstNum true
         if (btn.textContent === '=') {
           topDisplay.textContent = `${secondNum} ${operationSelected} ${firstNum} ${btn.textContent}`;
-          
-          // operationSelected = btn.textContent;
-
-          // secondNum = doMath(operationSelected, +secondNum, +firstNum) + '';
-          // mainDisplay.textContent = secondNum;
-          
-        } else {
-          secondNum = doMath(operationSelected, +secondNum, +firstNum) + '';
-          operationSelected = btn.textContent;
-          topDisplay.textContent = `${secondNum} ${operationSelected}`;
-          mainDisplay.textContent = `${secondNum}`;
-          firstNum = '';
+          result = doMath(operationSelected, +secondNum, +firstNum);
+          mainDisplay.textContent = result;
           decimalInUse = false;
+          operationSelected = '';
+          secondNum = result;
+          firstNum = '';
+        } else {
+          result = doMath(operationSelected, +secondNum, +firstNum);
+          mainDisplay.textContent = result;
+          operationSelected = btn.textContent;
+          decimalInUse = false;
+          secondNum = result;
+          firstNum = '';
+          topDisplay.textContent = `${result} ${operationSelected}`;
         }
-        
       }
     }
   });
 });
 
+// function showResult(oper, first, second) {
+//   result = doMath(oper, first, second);
+//   mainDisplay.textContent = result;
+//   decimalInUse = false;
+//   secondNum = result;
+//   firstNum = '';
+// }
 
-
-function showResult() {
-  result = operate();
-  mainDisplay.textContent = result;
-  decimalInUse = false;
-  operationSelected = '';
-  secondNum = result;
-  firstNum = '';
-}
