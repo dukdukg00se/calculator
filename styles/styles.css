@@ -55,6 +55,7 @@ main {
 #main-display {
   font-size: 40px;
   word-break: break-all; /* break word at point it overflows */
+  min-height: 40px;
   line-height: 1;
 }
 

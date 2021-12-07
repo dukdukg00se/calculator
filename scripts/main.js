@@ -51,11 +51,31 @@ function setOperand(char) {
   }
 }
 
+function backspace() {
+  if (!firstNum) {
+    if (!result) {
+      return;
+    } else if (result) {
+      firstNum = result.toString().slice(0, -1);
+    }
+  } else {
+    firstNum = firstNum.slice(0, -1);
+  }
+  mainDisplay.textContent = firstNum;
+}
+
+
 let mainDisplay = document.querySelector('#main-display');
 let topDisplay = document.querySelector('#top-display');
 
 let clearBtn = document.querySelector('.clear');
 clearBtn.addEventListener('click', reset);
+
+let deleteBtn = document.querySelector('.delete');
+deleteBtn.addEventListener('click', backspace);
+
+
+
 
 let nmbrBtns = document.querySelectorAll(".number");
 nmbrBtns.forEach((btn) => {
