@@ -73,7 +73,7 @@ let topDisplay = document.querySelector('#top-display');
 let clearBtn = document.querySelector('.clear');
 clearBtn.addEventListener('click', reset);
 
-let deleteBtn = document.querySelector('.delete');
+let deleteBtn = document.querySelector('.backspace');
 deleteBtn.addEventListener('click', backspace);
 
 

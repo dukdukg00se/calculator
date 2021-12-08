@@ -65,9 +65,22 @@ main {
   flex-wrap: wrap;
   flex-direction: row-reverse;
 }
-.top-btns {
+.erase-btns {
+  width: 126.5px;
+  height: 75px;
+  background-color: #ff5252;
+}
+.erase-btns:active {
+  background-color: #ff2929;
+}
+.operator {
+  background-color: #ff982f;
+}
+.operator:active {
+  background-color: #ff8100;
+}
+.zero {
   width: 172px;
-  height: 83px;
 }
 button {
  height: 75px;
@@ -75,13 +88,14 @@ button {
  border: solid 2px #03045e;
  border-radius: 10px;
  font-size: 22px;
- color: #03045e
+ color: #03045e;
+ background-color: #b888f7;
 }
 button:hover {
   border: solid 3px #03045e;
 }
 button:active {
-  background-color: #cfd1ce;
+  background-color: #9e54ff;
 }
 
 footer {
