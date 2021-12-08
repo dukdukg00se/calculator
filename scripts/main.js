@@ -58,10 +58,33 @@ function backspace() {
     if (!result) {
       return;
     } else if (result) {
-      firstNum = result.toString().slice(0, -1);
+      if ((/\./).test(result)) {
+        if (result[result.length - 1] === '.') {
+          firstNum = result.toString().slice(0, -1);
+          decimalInUse = false;
+        } else {
+          firstNum = result.toString().slice(0, -1);
+          decimalInUse = true;
+        }
+      } else {
+        firstNum = result.toString().slice(0, -1);
+        decimalInUse = false;
+      }
+      result = '';
     }
-  } else {
-    firstNum = firstNum.slice(0, -1);
+  } else if (firstNum) {
+    if ((/\./).test(firstNum)) {
+      if (firstNum[firstNum.length - 1] === '.') {
+        firstNum = firstNum.slice(0, -1);
+        decimalInUse = false;
+      } else {
+        firstNum = firstNum.slice(0, -1);
+        decimalInUse = true;
+      }  
+    } else {
+      firstNum = firstNum.slice(0, -1);
+      decimalInUse = false;
+    }  
   }
   mainDisplay.textContent = firstNum;
 }
