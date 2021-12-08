@@ -68,7 +68,7 @@ function backspace() {
         }
       } else {
         firstNum = result.toString().slice(0, -1);
-        decimalInUse = false;
+        // decimalInUse = false;
       }
       result = '';
     }
@@ -83,7 +83,7 @@ function backspace() {
       }  
     } else {
       firstNum = firstNum.slice(0, -1);
-      decimalInUse = false;
+      // decimalInUse = false;
     }  
   }
   mainDisplay.textContent = firstNum;
