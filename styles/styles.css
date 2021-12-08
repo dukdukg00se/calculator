@@ -9,19 +9,17 @@ html {
 body {
   min-height: 100%; /* body height grows to fit contents, can overflow root height */
   font-family: 'Roboto', sans-serif;
-  background-color: #c5c5c5;
-  line-height: 1.5;
+  background-color: #252525;
   font-size: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding-top: 100px;
-
 }
 
 main {
-  flex: 1;
+  flex: 1; /* grow to fit space and keep footer at bottom */
 }
 
 #calculator {
@@ -49,14 +47,12 @@ main {
 #top-display {
   font-size: 20px;
   word-break: break-all; /* break word at point it overflows */
-  min-height: 30px;
-  line-height: 1;
+  min-height: 30px; 
 }
 #main-display {
   font-size: 50px;
   word-break: break-all; /* break word at point it overflows */
   min-height: 50px;
-  line-height: 1;
 }
 
 #buttons-container {
@@ -102,6 +98,7 @@ footer {
   font-size: 30px;
   padding: 50px;
   min-width: 320px;
+  color: #f9faf8;
 }
 
 
