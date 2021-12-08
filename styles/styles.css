@@ -25,7 +25,7 @@ main {
 }
 
 #calculator {
-  background-color: #0077b5;
+  background-color: #6110ff;
   border: solid 5px #03045e;
   border-radius: 15px;
   width: 404px;
@@ -89,13 +89,13 @@ button {
  border-radius: 10px;
  font-size: 22px;
  color: #03045e;
- background-color: #b888f7;
+ background-color: #b8ff6b;
 }
 button:hover {
   border: solid 3px #03045e;
 }
 button:active {
-  background-color: #9e54ff;
+  background-color: #86ff00;
 }
 
 footer {
