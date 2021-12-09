@@ -60,43 +60,67 @@ function setOperand(char) {
     return char;
   }
 }
+
 function backspace() {
   if (!firstNum) {
     if (!result) {
       return;
-    } else if (result) {
-      if ((/\./).test(result)) {
-        if (result[result.length - 1] === '.') {
-          firstNum = result.toString().slice(0, -1);
+    } else { // result true
+      if ((/\./).test(result)) { // result contains '.'
+        decimalInUse = true;
+        if (result[result.length - 1] === '.') { // last char is '.'
           decimalInUse = false;
-        } else {
-          firstNum = result.toString().slice(0, -1);
-          decimalInUse = true;
         }
-      } else {
-        firstNum = result.toString().slice(0, -1);
-        // decimalInUse = false;
-      }
+      } 
+      firstNum = result.toString().slice(0, -1);
       result = '';
     }
-  } else if (firstNum) {
-    if ((/\./).test(firstNum)) {
+  } else { // firstNum true
+    if ((/\./).test(firstNum)) { // firstNum contains '.'
+      decimalInUse = true;
       if (firstNum[firstNum.length - 1] === '.') {
-        firstNum = firstNum.slice(0, -1);
         decimalInUse = false;
-      } else {
-        firstNum = firstNum.slice(0, -1);
-        decimalInUse = true;
-      }  
-    } else {
-      firstNum = firstNum.slice(0, -1);
-      // decimalInUse = false;
+      } 
     }  
+    firstNum = firstNum.slice(0, -1);
   }
   mainDisplay.textContent = firstNum;
 }
 
-
+// function backspace() {
+//   if (!firstNum) {
+//     if (!result) {
+//       return;
+//     } else { // result true
+//       if ((/\./).test(result)) { // result contains '.'
+//         decimalInUse = true;
+//         if (result[result.length - 1] === '.') { // last char is '.'
+//           firstNum = result.toString().slice(0, -1);
+//           decimalInUse = false;
+//         } else { // last char not '.'
+//           firstNum = result.toString().slice(0, -1);
+//         }
+//       } else { // result does not contain '.'
+//         firstNum = result.toString().slice(0, -1);
+//       }
+//       result = '';
+//     }
+//   } else { // firstNum true
+//     if ((/\./).test(firstNum)) { // firstNum contain
+//       if (firstNum[firstNum.length - 1] === '.') {
+//         firstNum = firstNum.slice(0, -1);
+//         decimalInUse = false;
+//       } else {
+//         firstNum = firstNum.slice(0, -1);
+//         decimalInUse = true;
+//       }  
+//     } else {
+//       firstNum = firstNum.slice(0, -1);
+//       // decimalInUse = false;
+//     }  
+//   }
+//   mainDisplay.textContent = firstNum;
+// }
 
 
 const clearBtn = document.querySelector('.clear');
