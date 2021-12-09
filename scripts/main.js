@@ -3,8 +3,13 @@ let secondNum = '';
 let operationSelected = '';
 let result = '';
 let decimalInUse = false;
+
 const mainDisplay = document.querySelector('#main-display');
 const topDisplay = document.querySelector('#top-display');
+const clearBtn = document.querySelector('.clear');
+const deleteBtn = document.querySelector('.backspace');
+const nmbrBtns = document.querySelectorAll(".number");
+const oprtrBtns = document.querySelectorAll('.operator');
 
 function add(num2, num1) {
 	return num2 + num1;
@@ -43,6 +48,14 @@ function doMath(operation, num2, num1) {
     return +answer.toFixed(4);
   }
 }
+function setOperand(char) {
+  if (char === '.') {
+    decimalInUse = true;
+    return 0 + char;
+  } else {
+    return char;
+  }
+}
 function reset() {
   firstNum = ''; 
   secondNum = ''; 
@@ -52,15 +65,6 @@ function reset() {
   mainDisplay.textContent = 0;
   topDisplay.textContent = '';
 }
-function setOperand(char) {
-  if (char === '.') {
-    decimalInUse = true;
-    return 0 + char;
-  } else {
-    return char;
-  }
-}
-
 function backspace() {
   if (!firstNum) {
     if (!result) {
@@ -87,52 +91,11 @@ function backspace() {
   mainDisplay.textContent = firstNum;
 }
 
-// function backspace() {
-//   if (!firstNum) {
-//     if (!result) {
-//       return;
-//     } else { // result true
-//       if ((/\./).test(result)) { // result contains '.'
-//         decimalInUse = true;
-//         if (result[result.length - 1] === '.') { // last char is '.'
-//           firstNum = result.toString().slice(0, -1);
-//           decimalInUse = false;
-//         } else { // last char not '.'
-//           firstNum = result.toString().slice(0, -1);
-//         }
-//       } else { // result does not contain '.'
-//         firstNum = result.toString().slice(0, -1);
-//       }
-//       result = '';
-//     }
-//   } else { // firstNum true
-//     if ((/\./).test(firstNum)) { // firstNum contain
-//       if (firstNum[firstNum.length - 1] === '.') {
-//         firstNum = firstNum.slice(0, -1);
-//         decimalInUse = false;
-//       } else {
-//         firstNum = firstNum.slice(0, -1);
-//         decimalInUse = true;
-//       }  
-//     } else {
-//       firstNum = firstNum.slice(0, -1);
-//       // decimalInUse = false;
-//     }  
-//   }
-//   mainDisplay.textContent = firstNum;
-// }
 
-
-const clearBtn = document.querySelector('.clear');
 clearBtn.addEventListener('click', reset);
 
-const deleteBtn = document.querySelector('.backspace');
 deleteBtn.addEventListener('click', backspace);
 
-
-
-
-const nmbrBtns = document.querySelectorAll(".number");
 nmbrBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
     if (!firstNum) {
@@ -158,7 +121,7 @@ nmbrBtns.forEach((btn) => {
   });
 });
 
-const oprtrBtns = document.querySelectorAll('.operator');
+
 oprtrBtns.forEach((btn) => {
   btn.addEventListener('click', () => {
     if (!operationSelected) { 
