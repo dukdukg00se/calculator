@@ -99,16 +99,16 @@ function backspace() {
 
 
 
-let clearBtn = document.querySelector('.clear');
+const clearBtn = document.querySelector('.clear');
 clearBtn.addEventListener('click', reset);
 
-let deleteBtn = document.querySelector('.backspace');
+const deleteBtn = document.querySelector('.backspace');
 deleteBtn.addEventListener('click', backspace);
 
 
 
 
-let nmbrBtns = document.querySelectorAll(".number");
+const nmbrBtns = document.querySelectorAll(".number");
 nmbrBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
     if (!firstNum) {
@@ -134,7 +134,7 @@ nmbrBtns.forEach((btn) => {
   });
 });
 
-let oprtrBtns = document.querySelectorAll('.operator');
+const oprtrBtns = document.querySelectorAll('.operator');
 oprtrBtns.forEach((btn) => {
   btn.addEventListener('click', () => {
     if (!operationSelected) { 
