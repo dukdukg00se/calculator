@@ -1,39 +1,47 @@
-let firstNum = ''; // this becomes num2
-let secondNum = ''; // this becomes num1
+let firstNum = ''; 
+let secondNum = ''; 
 let operationSelected = '';
 let result = '';
 let decimalInUse = false;
+const mainDisplay = document.querySelector('#main-display');
+const topDisplay = document.querySelector('#top-display');
 
-function add(num1, num2) {
-	return num1 + num2;
+function add(num2, num1) {
+	return num2 + num1;
 };
-function subtract(num1, num2) {
-	return num1 - num2;
+function subtract(num2, num1) {
+	return num2 - num1;
 };
-function multiply(num1, num2) {
- return num1 * num2;
+function multiply(num2, num1) {
+ return num2 * num1;
 };
-function divide(num1, num2) {
-  return (num2 === 0) ? 'LOL' : num1 / num2;
+function divide(num2, num1) {
+  return (num1 === 0) ? 'LOL' : num2 / num1;
 }
-function doMath(oper, first, second) {
+function doMath(operation, num2, num1) {
   let answer;
-  switch (oper) {
+  switch (operation) {
     case '+':
-      answer = add(first, second);
+      answer = add(num2, num1);
       break;
     case '-':
-      answer = subtract(first, second);
+      answer = subtract(num2, num1);
       break;
     case 'x':
-      answer = multiply(first, second);
+      answer = multiply(num2, num1);
       break;
     case '÷':
-      answer = divide(first, second);
+      answer = divide(num2, num1);
   }
-  // Note the plus sign drops any "extra" zeroes at the end.
-  // It changes the result (which is a string) into a number again (think "0 + foo"), which means that it uses only as many digits as necessary
-  return +answer.toFixed(4);
+
+  if (answer === 'LOL') {
+    return answer
+  } else {
+  // note the plus sign drops any "extra" zeroes at the end
+  // it changes the result (which is a string) into a number again (think "0 +
+  // foo"), which means that it uses only as many digits as necessary
+    return +answer.toFixed(4);
+  }
 }
 function reset() {
   firstNum = ''; 
@@ -52,7 +60,6 @@ function setOperand(char) {
     return char;
   }
 }
-
 function backspace() {
   if (!firstNum) {
     if (!result) {
@@ -90,8 +97,7 @@ function backspace() {
 }
 
 
-let mainDisplay = document.querySelector('#main-display');
-let topDisplay = document.querySelector('#top-display');
+
 
 let clearBtn = document.querySelector('.clear');
 clearBtn.addEventListener('click', reset);
@@ -181,13 +187,4 @@ oprtrBtns.forEach((btn) => {
   });
 });
 
-// Worked on this function to clean up code but at this point I just want to get the calculator working correctly
-// *************************
-// function showResult(oper, first, second) {
-//   result = doMath(oper, first, second);
-//   mainDisplay.textContent = result;
-//   decimalInUse = false;
-//   secondNum = result;
-//   firstNum = '';
-// }
 
