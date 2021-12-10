@@ -48,7 +48,7 @@ function doMath(operation, num2, num1) {
     return +answer.toFixed(4);
   }
 }
-function setOperand(char) {
+function setFirstDigit(char) {
   if (char === '.') {
     decimalInUse = true;
     return 0 + char;
@@ -91,35 +91,42 @@ function backspace() {
   mainDisplay.textContent = firstNum;
 }
 
-
 clearBtn.addEventListener('click', reset);
-
 deleteBtn.addEventListener('click', backspace);
-
 nmbrBtns.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    if (!firstNum) {
-      firstNum += setOperand(btn.textContent);
-    } else {
-      if (firstNum === "0") {
-        firstNum = "";
-        firstNum += setOperand(btn.textContent);
-      } else {
-        if (btn.textContent === ".") {
-          if (decimalInUse === false) {
-            firstNum += btn.textContent;
-            decimalInUse = true;
-          } else {
-            return;
-          }
-        } else { 
-          firstNum += btn.textContent;
+  btn.addEventListener("click", writeNum);
+});
+
+function writeNum(e) {
+  let character = e.key
+  ? e.key === 'Enter'
+    ? '='
+    : e.key
+  : e.target.textContent;
+
+  if (!firstNum) {
+    firstNum += setFirstDigit(character);
+  } else { // firstNum true
+    if (firstNum === '0') {
+      firstNum = '';
+      firstNum += setFirstDigit(character);
+    } else { // num not 0, can be .1-9
+      if (character === '.') {
+        if (decimalInUse === false) {
+          firstNum += character;
+          decimalInUse = true;
+        } else { // decimalInUse
+          return;
         }
+      } else { //num equal 1-9
+        firstNum += character;
       }
     }
-    mainDisplay.textContent = firstNum;
-  });
-});
+  }
+  mainDisplay.textContent = firstNum;
+}
+
+
 
 
 oprtrBtns.forEach((btn) => {
@@ -128,14 +135,14 @@ oprtrBtns.forEach((btn) => {
       if (!firstNum) { 
         if (!secondNum) {
           return;
-        } else if (secondNum) {
-          topDisplay.textContent = `${secondNum} ${operationSelected} ${firstNum} ${btn.textContent}`; // the top display will just show secondNum and the button content/new operator
+        } else { // secondNum true
+          topDisplay.textContent = `${secondNum} ${operationSelected} ${firstNum} ${btn.textContent}`; // top display shows secondNum and button content/new operator
           operationSelected = btn.textContent;
         }
       } else { // firstNum true
         if (btn.textContent === '=') {
           return;
-        } else { // btn === x|-|+|÷          
+        } else { // btn is x-+÷         
           secondNum = firstNum;
           firstNum = '';
           operationSelected = btn.textContent;
@@ -143,35 +150,44 @@ oprtrBtns.forEach((btn) => {
           topDisplay.textContent = `${secondNum} ${operationSelected}`;
         }
       }
-    } else { // if operationSelected true, secondNum HAS to be true
+    } else { // operationSelected true, secondNum also true
       if (!firstNum) { // if firstNum false/undefined
         if (btn.textContent === '=') {
           return;
-        } else { // btn === x|-|+|÷
+        } else { // btn is x-+÷
           operationSelected = btn.textContent;
           topDisplay.textContent = `${secondNum} ${operationSelected}`;
         }
-      } else { // if firstNum true
+      } else { // firstNum true
+        result = doMath(operationSelected, +secondNum, +firstNum);
+        mainDisplay.textContent = result;
         if (btn.textContent === '=') {
           topDisplay.textContent = `${secondNum} ${operationSelected} ${firstNum} ${btn.textContent}`;
-          result = doMath(operationSelected, +secondNum, +firstNum);
-          mainDisplay.textContent = result;
-          decimalInUse = false;
           operationSelected = '';
-          secondNum = result;
-          firstNum = '';
-        } else {
-          result = doMath(operationSelected, +secondNum, +firstNum);
-          mainDisplay.textContent = result;
+        } else { // btn is x-+÷
           operationSelected = btn.textContent;
-          decimalInUse = false;
-          secondNum = result;
-          firstNum = '';
           topDisplay.textContent = `${result} ${operationSelected}`;
         }
+        decimalInUse = false;
+        secondNum = result;
+        firstNum = '';
       }
     }
   });
 });
 
 
+
+
+window.addEventListener('keydown', writeNum);
+
+// window.addEventListener('keydown', function(e) {
+//   let character = e.key
+//   ? e.key === 'Enter'
+//     ? '='
+//     : e.key
+//   : e.target.textContent;
+
+//   console.log('character: ' + character);
+//   console.log(e.key == 'Enter');
+// });
