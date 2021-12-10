@@ -75,7 +75,10 @@ main {
 .operator:active {
   background-color: #ff8100;
 }
-.zero {
+#multiply {
+  padding-top: 12px;
+}
+#zero {
   width: 172px;
 }
 button {
