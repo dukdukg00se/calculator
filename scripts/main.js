@@ -90,19 +90,29 @@ function backspace() {
   }
   mainDisplay.textContent = firstNum;
 }
-
-clearBtn.addEventListener('click', reset);
-deleteBtn.addEventListener('click', backspace);
-nmbrBtns.forEach((btn) => {
-  btn.addEventListener("click", writeNum);
-});
-
 function writeNum(e) {
-  let character = e.key
-  ? e.key === 'Enter'
-    ? '='
-    : e.key
-  : e.target.textContent;
+  let character;
+  if (e.key) {
+    switch (e.key) {
+      case '.':
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+        character = e.key;   
+        break;
+      default:
+        return;
+    }
+  } else { // e.key is false, keyboard event false
+    character = e.target.textContent;
+  }
 
   if (!firstNum) {
     firstNum += setFirstDigit(character);
@@ -126,7 +136,11 @@ function writeNum(e) {
   mainDisplay.textContent = firstNum;
 }
 
-
+clearBtn.addEventListener('click', reset);
+deleteBtn.addEventListener('click', backspace);
+nmbrBtns.forEach((btn) => {
+  btn.addEventListener("click", writeNum);
+});
 
 
 oprtrBtns.forEach((btn) => {
@@ -179,7 +193,22 @@ oprtrBtns.forEach((btn) => {
 
 
 
+
+
+
+
+
+
+
+
 window.addEventListener('keydown', writeNum);
+
+
+// window.addEventListener('keydown', (e) => {
+//   console.log(e);
+//   console.log(e.type === 'keydown');
+// });
+
 
 // window.addEventListener('keydown', function(e) {
 //   let character = e.key
@@ -188,6 +217,28 @@ window.addEventListener('keydown', writeNum);
 //     : e.key
 //   : e.target.textContent;
 
-//   console.log('character: ' + character);
-//   console.log(e.key == 'Enter');
+//   let character;
+//   if (e.key) {
+//     switch (e.key) {
+//       case '.':
+//       case '0':
+//       case '1':
+//       case '2':
+//       case '3':
+//       case '4':
+//       case '5':
+//       case '6':
+//       case '7':
+//       case '8':
+//       case '9':
+//         character = e.key;
+//         break;
+//       default:
+//         character = e.target.textContent
+//     }
+//   } 
+
+
+// console.log(character);
+//   // console.log(e.key == 'Enter');
 // });
