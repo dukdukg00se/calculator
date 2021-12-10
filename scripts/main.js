@@ -32,7 +32,7 @@ function doMath(operation, num2, num1) {
     case '-':
       answer = subtract(num2, num1);
       break;
-    case 'x':
+    case '*':
       answer = multiply(num2, num1);
       break;
     case '÷':
@@ -135,6 +135,71 @@ function writeNum(e) {
   }
   mainDisplay.textContent = firstNum;
 }
+function setOperation(e) {
+  let operation;
+  if (e.key) {
+    switch (e.key) {
+      case '/':
+        operation = '÷';
+        break;
+      case 'Enter':
+        operation = '=';
+        break;
+      case '*':
+      case '-':
+      case '+':
+        operation = e.key;
+        break;
+      default:
+        return;
+    }
+  } else {
+    operation = e.target.textContent;
+  }
+
+  if (!operationSelected) { 
+    if (!firstNum) { 
+      if (!secondNum) {
+        return;
+      } else { // secondNum true
+        topDisplay.textContent = `${secondNum} ${operationSelected} ${firstNum} ${operation}`; // top display shows secondNum and button content/new operator
+        operationSelected = operation;
+      }
+    } else { // firstNum true
+      if (operation === '=') {
+        return;
+      } else { // btn is *-+÷         
+        secondNum = firstNum;
+        firstNum = '';
+        operationSelected = operation;
+        decimalInUse = false;
+        topDisplay.textContent = `${secondNum} ${operationSelected}`;
+      }
+    }
+  } else { // operationSelected true, secondNum also true
+    if (!firstNum) { // if firstNum false/undefined
+      if (operation === '=') {
+        return;
+      } else { // btn is *-+÷
+        operationSelected = operation;
+        topDisplay.textContent = `${secondNum} ${operationSelected}`;
+      }
+    } else { // firstNum true
+      result = doMath(operationSelected, +secondNum, +firstNum);
+      mainDisplay.textContent = result;
+      if (operation === '=') {
+        topDisplay.textContent = `${secondNum} ${operationSelected} ${firstNum} ${operation}`;
+        operationSelected = '';
+      } else { // btn is *-+÷
+        operationSelected = operation;
+        topDisplay.textContent = `${result} ${operationSelected}`;
+      }
+      decimalInUse = false;
+      secondNum = result;
+      firstNum = '';
+    }
+  }
+}
 
 clearBtn.addEventListener('click', reset);
 deleteBtn.addEventListener('click', backspace);
@@ -144,64 +209,18 @@ nmbrBtns.forEach((btn) => {
 
 
 oprtrBtns.forEach((btn) => {
-  btn.addEventListener('click', () => {
-    if (!operationSelected) { 
-      if (!firstNum) { 
-        if (!secondNum) {
-          return;
-        } else { // secondNum true
-          topDisplay.textContent = `${secondNum} ${operationSelected} ${firstNum} ${btn.textContent}`; // top display shows secondNum and button content/new operator
-          operationSelected = btn.textContent;
-        }
-      } else { // firstNum true
-        if (btn.textContent === '=') {
-          return;
-        } else { // btn is x-+÷         
-          secondNum = firstNum;
-          firstNum = '';
-          operationSelected = btn.textContent;
-          decimalInUse = false;
-          topDisplay.textContent = `${secondNum} ${operationSelected}`;
-        }
-      }
-    } else { // operationSelected true, secondNum also true
-      if (!firstNum) { // if firstNum false/undefined
-        if (btn.textContent === '=') {
-          return;
-        } else { // btn is x-+÷
-          operationSelected = btn.textContent;
-          topDisplay.textContent = `${secondNum} ${operationSelected}`;
-        }
-      } else { // firstNum true
-        result = doMath(operationSelected, +secondNum, +firstNum);
-        mainDisplay.textContent = result;
-        if (btn.textContent === '=') {
-          topDisplay.textContent = `${secondNum} ${operationSelected} ${firstNum} ${btn.textContent}`;
-          operationSelected = '';
-        } else { // btn is x-+÷
-          operationSelected = btn.textContent;
-          topDisplay.textContent = `${result} ${operationSelected}`;
-        }
-        decimalInUse = false;
-        secondNum = result;
-        firstNum = '';
-      }
-    }
-  });
+  btn.addEventListener('click', setOperation);
+});
+
+
+window.addEventListener('keydown', (e) => {
+  writeNum(e);
+  setOperation(e);
 });
 
 
 
 
-
-
-
-
-
-
-
-
-window.addEventListener('keydown', writeNum);
 
 
 // window.addEventListener('keydown', (e) => {
@@ -241,4 +260,57 @@ window.addEventListener('keydown', writeNum);
 
 // console.log(character);
 //   // console.log(e.key == 'Enter');
+// });
+
+
+
+
+
+
+
+// oprtrBtns.forEach((btn) => {
+//   btn.addEventListener('click', () => {
+//     if (!operationSelected) { 
+//       if (!firstNum) { 
+//         if (!secondNum) {
+//           return;
+//         } else { // secondNum true
+//           topDisplay.textContent = `${secondNum} ${operationSelected} ${firstNum} ${btn.textContent}`; // top display shows secondNum and button content/new operator
+//           operationSelected = btn.textContent;
+//         }
+//       } else { // firstNum true
+//         if (btn.textContent === '=') {
+//           return;
+//         } else { // btn is *-+÷         
+//           secondNum = firstNum;
+//           firstNum = '';
+//           operationSelected = btn.textContent;
+//           decimalInUse = false;
+//           topDisplay.textContent = `${secondNum} ${operationSelected}`;
+//         }
+//       }
+//     } else { // operationSelected true, secondNum also true
+//       if (!firstNum) { // if firstNum false/undefined
+//         if (btn.textContent === '=') {
+//           return;
+//         } else { // btn is *-+÷
+//           operationSelected = btn.textContent;
+//           topDisplay.textContent = `${secondNum} ${operationSelected}`;
+//         }
+//       } else { // firstNum true
+//         result = doMath(operationSelected, +secondNum, +firstNum);
+//         mainDisplay.textContent = result;
+//         if (btn.textContent === '=') {
+//           topDisplay.textContent = `${secondNum} ${operationSelected} ${firstNum} ${btn.textContent}`;
+//           operationSelected = '';
+//         } else { // btn is *-+÷
+//           operationSelected = btn.textContent;
+//           topDisplay.textContent = `${result} ${operationSelected}`;
+//         }
+//         decimalInUse = false;
+//         secondNum = result;
+//         firstNum = '';
+//       }
+//     }
+//   });
 // });
