@@ -1,9 +1,12 @@
-let firstNum = ''; 
+// variables to keep track of the math
+// all strings because it's easier to work with, e.g., adding '.'
+let firstNum = ''; //  
 let secondNum = ''; 
 let operationSelected = '';
 let result = '';
 let decimalInUse = false;
 
+// const variables
 const mainDisplay = document.querySelector('#main-display');
 const topDisplay = document.querySelector('#top-display');
 const clearBtn = document.querySelector('.clear');
@@ -11,6 +14,7 @@ const deleteBtn = document.querySelector('.backspace');
 const nmbrBtns = document.querySelectorAll(".number");
 const oprtrBtns = document.querySelectorAll('.operator');
 
+// arithemtic operations
 function add(num2, num1) {
 	return num2 + num1;
 };
@@ -23,6 +27,8 @@ function multiply(num2, num1) {
 function divide(num2, num1) {
   return (num1 === 0) ? 'LOL' : num2 / num1;
 }
+
+// return result of selected math operation
 function doMath(operation, num2, num1) {
   let answer;
   switch (operation) {
@@ -41,13 +47,14 @@ function doMath(operation, num2, num1) {
 
   if (answer === 'LOL') {
     return answer
-  } else {
+  } else { // round answer to at most 4 decimal places
   // note the plus sign drops any "extra" zeroes at the end
   // it changes the result (which is a string) into a number again (think "0 +
   // foo"), which means that it uses only as many digits as necessary
     return +answer.toFixed(4);
   }
 }
+// set first string digit of firstNum variable
 function setFirstDigit(char) {
   if (char === '.') {
     decimalInUse = true;
@@ -56,6 +63,7 @@ function setFirstDigit(char) {
     return char;
   }
 }
+// reset calculator for clear function
 function reset() {
   firstNum = ''; 
   secondNum = ''; 
@@ -65,9 +73,7 @@ function reset() {
   mainDisplay.textContent = 0;
   topDisplay.textContent = '';
 }
-
-
-
+// delete last string digit
 function backspace() {
   if (!firstNum) {
     if (!result) {
@@ -93,7 +99,7 @@ function backspace() {
   }
   mainDisplay.textContent = firstNum;
 }
-
+// set firtNum variabls
 function writeNum(e) {
   let character;
   if (e.key) {
@@ -121,12 +127,12 @@ function writeNum(e) {
   if (!firstNum) {
     firstNum += setFirstDigit(character);
   } else { // firstNum true
-    if (firstNum === '0') {
-      firstNum = '';
+    if (firstNum === '0') { 
+      firstNum = ''; // prevent multiple 0's in front
       firstNum += setFirstDigit(character);
     } else { // num not 0, can be .1-9
       if (character === '.') {
-        if (decimalInUse === false) {
+        if (decimalInUse === false) { // prevent multiple '.'
           firstNum += character;
           decimalInUse = true;
         } else { // decimalInUse
@@ -139,7 +145,7 @@ function writeNum(e) {
   }
   mainDisplay.textContent = firstNum;
 }
-
+// perform, display selected operation and set variables for next operation
 function setOperation(e) {
   let operation;
   if (e.key) {
@@ -167,7 +173,7 @@ function setOperation(e) {
       if (!secondNum) {
         return;
       } else { // secondNum true
-        topDisplay.textContent = `${secondNum} ${operationSelected} ${firstNum} ${operation}`; // top display shows secondNum and button content/new operator
+        topDisplay.textContent = `${secondNum} ${operationSelected} ${firstNum} ${operation}`; // top display show secondNum and button content/new operator
         operationSelected = operation;
       }
     } else { // firstNum true
@@ -182,7 +188,7 @@ function setOperation(e) {
       }
     }
   } else { // operationSelected true, secondNum also true
-    if (!firstNum) { // if firstNum false/undefined
+    if (!firstNum) { 
       if (operation === '=') {
         return;
       } else { // btn is *-+÷
@@ -208,7 +214,16 @@ function setOperation(e) {
 
 clearBtn.addEventListener('click', reset);
 deleteBtn.addEventListener('click', backspace);
-
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' || e.key === 'Delete') {
+    reset();
+  } else if (e.key === 'Backspace') {
+    backspace();
+  } else {
+    writeNum(e);
+    setOperation(e);
+  }  
+});
 nmbrBtns.forEach((btn) => {
   btn.addEventListener("click", writeNum);
 });
@@ -217,61 +232,6 @@ oprtrBtns.forEach((btn) => {
 });
 
 
-window.addEventListener('keydown', (e) => {
-  console.log(e.key);
-  if (e.key === 'Escape' || e.key === 'Delete') {
-    reset();
-  } else if (e.key === 'Backspace') {
-    backspace();
-  } else {
-    writeNum(e);
-    setOperation(e);
-  }
-});
-
-
-
-
-
-
-// window.addEventListener('keydown', (e) => {
-//   console.log(e);
-//   console.log(e.type === 'keydown');
-// });
-
-
-// window.addEventListener('keydown', function(e) {
-//   let character = e.key
-//   ? e.key === 'Enter'
-//     ? '='
-//     : e.key
-//   : e.target.textContent;
-
-//   let character;
-//   if (e.key) {
-//     switch (e.key) {
-//       case '.':
-//       case '0':
-//       case '1':
-//       case '2':
-//       case '3':
-//       case '4':
-//       case '5':
-//       case '6':
-//       case '7':
-//       case '8':
-//       case '9':
-//         character = e.key;
-//         break;
-//       default:
-//         character = e.target.textContent
-//     }
-//   } 
-
-
-// console.log(character);
-//   // console.log(e.key == 'Enter');
-// });
 
 
 
@@ -279,49 +239,3 @@ window.addEventListener('keydown', (e) => {
 
 
 
-// oprtrBtns.forEach((btn) => {
-//   btn.addEventListener('click', () => {
-//     if (!operationSelected) { 
-//       if (!firstNum) { 
-//         if (!secondNum) {
-//           return;
-//         } else { // secondNum true
-//           topDisplay.textContent = `${secondNum} ${operationSelected} ${firstNum} ${btn.textContent}`; // top display shows secondNum and button content/new operator
-//           operationSelected = btn.textContent;
-//         }
-//       } else { // firstNum true
-//         if (btn.textContent === '=') {
-//           return;
-//         } else { // btn is *-+÷         
-//           secondNum = firstNum;
-//           firstNum = '';
-//           operationSelected = btn.textContent;
-//           decimalInUse = false;
-//           topDisplay.textContent = `${secondNum} ${operationSelected}`;
-//         }
-//       }
-//     } else { // operationSelected true, secondNum also true
-//       if (!firstNum) { // if firstNum false/undefined
-//         if (btn.textContent === '=') {
-//           return;
-//         } else { // btn is *-+÷
-//           operationSelected = btn.textContent;
-//           topDisplay.textContent = `${secondNum} ${operationSelected}`;
-//         }
-//       } else { // firstNum true
-//         result = doMath(operationSelected, +secondNum, +firstNum);
-//         mainDisplay.textContent = result;
-//         if (btn.textContent === '=') {
-//           topDisplay.textContent = `${secondNum} ${operationSelected} ${firstNum} ${btn.textContent}`;
-//           operationSelected = '';
-//         } else { // btn is *-+÷
-//           operationSelected = btn.textContent;
-//           topDisplay.textContent = `${result} ${operationSelected}`;
-//         }
-//         decimalInUse = false;
-//         secondNum = result;
-//         firstNum = '';
-//       }
-//     }
-//   });
-// });
