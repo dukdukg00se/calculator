@@ -98,10 +98,24 @@ button:active {
 }
 
 footer {
-  font-size: 30px;
-  padding: 50px;
+  font-family: 'Playball', cursive;
+  font-size: 40px;
+  padding: 10px;
   min-width: 320px;
-  color: #f9faf8;
+
+  
+}
+
+a {
+  /* text-decoration: none; */
+  color: #b8ff6b;
+}
+a:hover {
+  font-size: 41px;
+  color: #ff982f;
+}
+a:active {
+  color: #ff5252;
 }
 
 
