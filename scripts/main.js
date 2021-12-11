@@ -65,6 +65,9 @@ function reset() {
   mainDisplay.textContent = 0;
   topDisplay.textContent = '';
 }
+
+
+
 function backspace() {
   if (!firstNum) {
     if (!result) {
@@ -90,6 +93,7 @@ function backspace() {
   }
   mainDisplay.textContent = firstNum;
 }
+
 function writeNum(e) {
   let character;
   if (e.key) {
@@ -135,6 +139,7 @@ function writeNum(e) {
   }
   mainDisplay.textContent = firstNum;
 }
+
 function setOperation(e) {
   let operation;
   if (e.key) {
@@ -203,19 +208,25 @@ function setOperation(e) {
 
 clearBtn.addEventListener('click', reset);
 deleteBtn.addEventListener('click', backspace);
+
 nmbrBtns.forEach((btn) => {
   btn.addEventListener("click", writeNum);
 });
-
-
 oprtrBtns.forEach((btn) => {
   btn.addEventListener('click', setOperation);
 });
 
 
 window.addEventListener('keydown', (e) => {
-  writeNum(e);
-  setOperation(e);
+  console.log(e.key);
+  if (e.key === 'Escape' || e.key === 'Delete') {
+    reset();
+  } else if (e.key === 'Backspace') {
+    backspace();
+  } else {
+    writeNum(e);
+    setOperation(e);
+  }
 });
 
 
