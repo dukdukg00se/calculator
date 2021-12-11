@@ -99,7 +99,7 @@ function backspace() {
   }
   mainDisplay.textContent = firstNum;
 }
-// set firtNum variabls
+// set firtNum variable
 function writeNum(e) {
   let character;
   if (e.key) {
